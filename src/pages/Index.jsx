@@ -1,4 +1,4 @@
-import { Container, Text, VStack, Heading, Box, Image, Link, Button } from "@chakra-ui/react";
+import { Container, Text, VStack, Heading, Box, Image, Link, Button, useColorModeValue } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
 const Index = () => {
@@ -10,7 +10,7 @@ const Index = () => {
   }, []);
 
   return (
-    <Container centerContent maxW="container.md" py={8}>
+    <Container centerContent maxW="container.md" py={8} bg={useColorModeValue("gray.50", "gray.800")}>
       <VStack spacing={4}>
         <Heading as="h1" size="2xl">Welcome to My Blog</Heading>
         <Image src="/images/blog-banner.jpg" alt="Blog Banner" borderRadius="md" />
