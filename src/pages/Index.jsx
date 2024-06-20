@@ -1,4 +1,5 @@
-import { Container, Text, VStack, Heading, Box, Image, Link, Button, useColorModeValue } from "@chakra-ui/react";
+import { Container, Text, VStack, Heading, Box, Image, Link, Button, useColorModeValue, IconButton } from "@chakra-ui/react";
+import { FaTrash } from "react-icons/fa";
 import { useEffect, useState } from "react";
 
 const Index = () => {
@@ -8,6 +9,12 @@ const Index = () => {
     const savedPosts = JSON.parse(localStorage.getItem("posts")) || [];
     setPosts(savedPosts);
   }, []);
+
+  const handleDelete = (index) => {
+    const updatedPosts = posts.filter((_, i) => i !== index);
+    localStorage.setItem("posts", JSON.stringify(updatedPosts));
+    setPosts(updatedPosts);
+  };
 
   return (
     <Container centerContent maxW="container.md" py={8} bg={useColorModeValue("gray.50", "gray.800")}>
@@ -23,7 +30,16 @@ const Index = () => {
         <Button as={Link} href="/add-post" colorScheme="teal" size="md">Add New Post</Button>
         <VStack spacing={4} w="100%">
           {posts.map((post, index) => (
-            <Box key={index} p={4} borderWidth="1px" borderRadius="md" w="100%">
+            <Box key={index} p={4} borderWidth="1px" borderRadius="md" w="100%" position="relative">
+              <IconButton
+                icon={<FaTrash />}
+                colorScheme="red"
+                size="sm"
+                position="absolute"
+                top="1rem"
+                right="1rem"
+                onClick={() => handleDelete(index)}
+              />
               <Heading as="h3" size="md">{post.title}</Heading>
               <Text fontSize="sm" color="gray.500">{post.date}</Text>
               <Text mt={2}>{post.content}</Text>
